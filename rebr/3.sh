@@ -1,13 +1,12 @@
 #!/bin/sh
 
+apt update
+apt upgrade -y
 apt install mysql-server
-mysql -u root -e 'CREATE USER IF NOT EXISTS exporter@%'
-
-mysql -u root -e ' SET PASSWORD FOR exporter@% = "bar"'
-
-mysql -u root -e ' GRANT ALL ON *.* TO exporter@%'
-
-mysql -u root -e ' FLUSH PRIVILEGES'
+mysql -u root -e "CREATE USER IF NOT EXISTS 'exporter'@'%'"
+mysql -u root -e "SET PASSWORD FOR 'exporter'@'%' = 'bar' "
+mysql -u root -e "GRANT ALL ON *.* TO 'exporter'@'%'"
+mysql -u root -e 'FLUSH PRIVILEGES'
 
 cd /opt/
 wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.13.0/mysqld_exporter-0.13.0.linux-amd64.tar.gz
