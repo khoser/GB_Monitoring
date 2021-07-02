@@ -1,8 +1,8 @@
 #!/bin/sh
 
 echo '
-
-rule_files:
+# Требуется установить в разделе
+# rule_files:
   - "alerts.yml"
 ' >> /opt/prometheus/prometheus.yml
 
@@ -14,7 +14,7 @@ groups:
   interval: 10s
   rules:
   - alert: prometheus_tsdb_compaction_duration_seconds_bucket
-    expr: histogram_quantile(0.95, (prometheus_tsdb_compaction_duration_seconds_bucket[10m] ) ) >= 1
+    expr: histogram_quantile(0.95, prometheus_tsdb_compaction_duration_seconds_bucket ) >= 1
     for: 5m
     labels:
       severity: warning
